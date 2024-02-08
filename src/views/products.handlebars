@@ -1,0 +1,102 @@
+<div>
+  {{#if user}}
+  <div>
+    <p>Bienvenido/a {{user.first_name}} {{user.last_name}}</p>
+    <a href="/profile/{{user.email}}"><button>Ver perfil</button></a>
+  </div>
+  
+  <br>
+  
+  <form action="" id="logOutForm">
+      <button type="submit">Cerrar Sesión</button>
+  </form>
+  {{/if}}
+
+  {{#if role}}
+    <p>Usted tiene permisos de administrador</p>
+  {{/if}}
+
+  {{#unless user}}
+    <a href="/login"><button>Registrarse</button></a>
+    <a href="/signup"><button>Crear Cuenta</button></a>
+  {{/unless}}
+
+  <h3>Productos</h3>
+
+{{#if hasPrevPage}}
+	<a href="/products?page={{prevPage}}"><button>Página anterior</button></a>
+{{/if}}
+{{#if hasNextPage}}
+	<a href="/products?page={{nextPage}}"><button>Siguiente página</button></a>
+{{/if}}
+  
+    <form id="findProduct" method="get" >
+      <label for="findProduct">Buscar producto:</label><br>
+      <input type="text" id="prodTitle"  >
+
+      <button  type="submit">Buscar</button>
+    </form>
+
+
+<div id="cartOptions" class={{cartId}} >
+
+</div>
+
+{{#if cartId}}
+  	<a href="/carts/{{cartId}}"><button>Ver Carrito</button></a>
+    <p id="cartId">{{cartId}}</p>
+    <button id="deleteCart" name={{cartId}} >Eliminar carrito</button>
+{{/if}}
+
+{{#unless cartId}}
+      <button id="createCart" >Crear carrito</button>
+{{/unless}} 
+
+
+
+<div>
+  {{#unless cat}}
+  <p>Filtrar por:</p>
+	<a href="/products?page={{page}}&cat=fijación"><button>Fijación</button></a>
+	<a href="/products?page={{page}}&cat=herramientas"><button>Herramientas</button></a>
+{{/unless}}
+
+{{#if cat}}
+  <p>Filtrado por {{cat}}</p>
+	<a href="/products?page={{page}}"><button>Eliminar filtro</button></a><br>
+{{/if}}
+
+</div>
+
+<div id="productsContainer" >
+	{{#each productsDocs }}
+    <div >
+      <p>Title: {{this.title}}</p>
+      <p>Description: {{this.description}}</p>
+      <p>Code: {{this.code}}</p>
+      <p>Price: ${{this.price}}</p>
+      <p>Stock: {{this.stock}}</p>
+      <p>Category: {{this.category}}</p>
+      <p>Id: </p>
+      <button class="AddProdToCart">Agregar al carrito</button></a>
+      {{#if role}}
+        <button class="AddProdToCart">Eliminar producto</button></a>
+      {{/if}}
+      <p>-----------------------------------------</p>
+
+    </div>
+
+	{{/each}}
+</div>
+
+
+{{#if hasPrevPage}}
+	<a href="/products?page={{prevPage}}"><button>Página anterior</button></a>
+{{/if}}
+{{#if hasNextPage}}
+	<a href="/products?page={{nextPage}}"><button>Siguiente página</button></a>
+{{/if}}
+</div>
+
+
+<script src='/js/products.js'></script>
